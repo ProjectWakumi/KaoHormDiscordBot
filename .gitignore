@@ -1,0 +1,19 @@
+# ความลับ — ห้ามอัปโหลดเด็ดขาด
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ข้อมูลรันไทม์ (มี ID ของเซิร์ฟเวอร์/สมาชิก)
+data/*.json
+data/*.bak
+data/*.corrupt-*
+!data/.gitkeep
+logs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

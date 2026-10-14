@@ -1,0 +1,33 @@
+KaoHorm Version Status ด้วยตัวเองทีละขั้น โดยเริ่มจากเวอร์ชันที่อ่านจาก GitHub แล้วนำไปแสดงในสถานะ Discord Bot
+ขั้นที่ 1: สร้างไฟล์ version_status.py
+สร้างไฟล์ในโฟลเดอร์ cogs/ แล้วลองเขียนโค้ดนี้ก่อน
+import discordimport aiohttpfrom discord.ext import commands, tasks# GitHub: ไฟล์ version.json ของโปรเจกต์VERSION_URL = (    "https://raw.githubusercontent.com/"    "ProjectWakumi/KaoHormDiscordBot/main/version.json")class VersionStatus(commands.Cog):    def __init__(self, bot):        self.bot = bot        self.current_version = None        self.check_version.start()    def cog_unload(self):        self.check_version.cancel()    async def get_github_version(self):        """ดึงเวอร์ชันล่าสุดจาก GitHub"""        try:            async with aiohttp.ClientSession() as session:                async with session.get(                    VERSION_URL,                    timeout=aiohttp.ClientTimeout(total=10)                ) as response:                    if response.status != 200:                        return None
+
+
+
+ขั้นที่ 2: เตรียมไฟล์เวอร์ชันบน GitHub
+สร้างไฟล์ version.json ที่ Root ของ Repository
+
+{
+    "version": "1.0.0"
+}
+
+
+
+Commit และ Push ไฟล์นี้ขึ้น GitHub ก่อน แล้วตรวจสอบว่าเปิดไฟล์ผ่าน URL นี้ได้จริงหรือไม่:
+ตรวจสอบไฟล์ version.json บน GitHub
+หาก Repository หรือสาขา main ของคุณใช้ชื่อแตกต่างจากตัวอย่าง ต้องแก้ VERSION_URL ให้ตรงกับตำแหน่งจริง
+ขั้นที่ 3: โหลดระบบเข้ากับบอท
+ในไฟล์หลัก เช่น main.py ให้เพิ่มการโหลด Extension เข้าไปใน setup_hook() ที่มีอยู่แล้ว
+async def setup_hook(self):    await self.load_extension("cogs.version_status")
+
+
+
+โค้ดนี้เป็นตัวอย่างสำหรับคลาสที่สืบทอดจาก commands.Bot หากโปรเจกต์มี setup_hook() อยู่แล้ว ให้เพิ่มบรรทัด load_extension เข้าไปในเมธอดเดิม อย่าสร้างเมธอดซ้ำ และอย่าลืมตรวจสอบว่าได้ติดตั้ง aiohttp แล้ว
+ขั้นที่ 4: ทดลองทำงาน
+1. เปิดบอทตามวิธีที่คุณใช้ประจำ
+2. ตรวจสอบ Terminal ว่าไม่มีข้อผิดพลาดตอนโหลด Cog
+3. เมื่อบอทออนไลน์ ระบบจะตรวจสอบ GitHub ภายในรอบแรก แล้วตรวจซ้ำทุก 5 นาที
+4. เปลี่ยน version.json บน GitHub จาก 1.0.0 เป็น 1.1.0 แล้วรอรอบตรวจสอบถัดไป
+สถานะควรเปลี่ยนเป็น Watching KaoHorm | Version 1.1.0
+หมายเหตุ: โค้ดนี้ยังอ่านเวอร์ชันจาก version.json โดยตรง ไม่ได้เชื่อมกับ Version Manager ในเครื่องโดยอัตโนมัติ ขั้นต่อไปจึงควรเชื่อมระบบ Save/Release ของคุณให้บันทึกเวอร์ชันและ Push ขึ้น GitHub ด้วย

@@ -1,0 +1,58 @@
+{
+  "project": "KaoHorm",
+  "versions": [
+    {
+      "version": "0.0.1",
+      "date": "2026-10-15T01:38:36+07:00",
+      "description": "ระบบ Bot ขั้นแรก",
+      "added_systems": [
+        "ระบบ SecurityGuard",
+        "ระบบ version_status"
+      ],
+      "modified_systems": [],
+      "removed_systems": [],
+      "commands_added": [
+        "/security exempt",
+        "/security repair",
+        "/security setup",
+        "/security status",
+        "/security toggle"
+      ],
+      "commands_removed": [],
+      "unclassified": [
+        ".env.example",
+        ".gitignore",
+        "README.md",
+        "Save.bat",
+        "cogs/__init__.py",
+        "data/.gitkeep",
+        "requirements.txt",
+        "ระบบ SG.txt",
+        "ระบบ Save ข้อมูล.txt",
+        "ระบบ สถานะของบอทใช้คู่กับระบบ Save.txt"
+      ],
+      "files": {
+        "added": [
+          ".env.example",
+          ".gitignore",
+          "README.md",
+          "Save.bat",
+          "cogs/SecurityGuard.py",
+          "cogs/__init__.py",
+          "cogs/version_status.py",
+          "data/.gitkeep",
+          "main.py",
+          "requirements.txt",
+          "save.py",
+          "ระบบ SG.txt",
+          "ระบบ Save ข้อมูล.txt",
+          "ระบบ สถานะของบอทใช้คู่กับระบบ Save.txt"
+        ],
+        "modified": [],
+        "deleted": [],
+        "renamed": []
+      },
+      "commit": null
+    }
+  ]
+}
